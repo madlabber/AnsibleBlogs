@@ -1,0 +1,11 @@
+sudo yum install epel-release -y
+sudo yum install python-pip -y
+sudo pip install ansible
+sudo pip install netapp-lib solidfire-sdk-python
+
+install OSX:
+sudo pip install ansible
+sudo pip install requests
+sudo pip install PyVmomi --ignore-installed six 
+
+

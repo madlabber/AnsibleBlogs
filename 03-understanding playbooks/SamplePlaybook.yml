@@ -1,0 +1,13 @@
+---
+- hosts: databases
+  name: Main Play Title
+  vars:
+    name_first: David
+    name_last: Blackwell
+  tasks:
+  - name: Mount nfs export
+      mount:
+        state: mounted
+        path: /mnt/tmp
+        src: "{{ name_first }}:/{{ name_last }}"
+        fstype: nfs

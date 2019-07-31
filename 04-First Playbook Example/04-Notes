@@ -1,0 +1,3 @@
+These playbooks are not using a variables file, so edit the IPs and credentials into the playbook to match your laptop environment
+
+Set the hostname to the vsim's cluster_mgmt IP

@@ -1,0 +1,37 @@
+--- 
+- hosts: localhost 
+  name: Setup ONTAP 
+  vars_files: 
+    cred.yml 
+  vars: 
+    state: present 
+    size: 10 
+  tasks: 
+  - name: Gather facts 
+    na_ontap_gather_facts: 
+      state: info 
+      hostname: "{{ hostname }}" 
+      username: "{{ username }}" 
+      password: "{{ password }}" 
+      https: "{{ https }}" 
+      validate_certs: "{{ validate_certs }}" 
+  - name: Create Volume 
+    na_ontap_volume: 
+      state: present 
+      name: fact_test 
+      vserver: vserver1 
+      aggregate_name: "{{ item }}" 
+      size: "{{ size }}" 
+      size_unit: gb 
+      hostname: "{{ hostname }}" 
+      username: "{{ username }}" 
+      password: "{{ password }}" 
+      https: "{{ https }}" 
+      validate_certs: "{{ validate_certs }}" 
+    register: result 
+    with_items: "{{ ontap_facts.aggregate_info }}" 
+    when: 
+    - "{{ ontap_facts.aggregate_info[item].aggr_space_attributes.size_available | int / 1024 / 1024 / 1024}} > {{ size }}" 
+    - not item.startswith("aggr0") 
+    - result is not defined or result.rc != 0 
+    ignore_errors: yes

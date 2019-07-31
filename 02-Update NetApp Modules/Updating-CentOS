@@ -1,0 +1,10 @@
+sudo yum install git -y
+git clone https://github.com/ansible/ansible.git ~/ansible-devel
+cd ~/ansible-devel
+git pull
+ansible --version
+
+cd ~/ansible-devel/lib/ansible
+sudo yes|cp -aRv module_utils/netapp* /usr/lib/python2.7/site-packages/ansible/module_utils
+sudo yes|cp -aRv modules/storage/netapp/* /usr/lib/python2.7/site-packages/ansible/modules/storage/netapp/
+sudo pip install ansible --upgrade

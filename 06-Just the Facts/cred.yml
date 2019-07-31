@@ -1,0 +1,5 @@
+hostname: "172.16.108.189"
+username: "admin"
+password: "netapp123"
+https: true
+validate_certs: false

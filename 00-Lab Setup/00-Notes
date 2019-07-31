@@ -1,0 +1,43 @@
+LAb Setup
+Linux:
+Centos desktop VM, 7.6 latest
+
+ONTAP:
+cluster: vsim
+node: vsim-01
+data aggr: aggr1
+licenses: NFS
+
+# create the vsim
+vsim create -vsim vsim-01 -version 9.5 -mode C -create vsim -serial 4082368511 -vdevinit 23:14:0,23:14:1,23:14:2,23:14:3
+
+# start the vsim
+vsim start -vsim vsim-01
+
+# connect to the console and wait for the login
+vsim console -vsim vsim-01
+
+# set the admin password to netapp123
+security login password
+
+# license NFS
+license add QFATWPKBFDUFZGABGAAAAAAAAAAA
+
+# add disks to aggr0 and disable snaps on vol0 to avoid filling up the root
+aggr rename aggr0 aggr0_vsim_01
+run local snap sched vol0 0 0 0
+run local snap sched -A aggr0_vsim_01 0 0 0
+run local disk assign all
+aggr add -aggregate aggr0_vsim_01 -diskcount 3
+run local vol size vol0 3g
+
+# Create a data aggregate
+aggr create aggr1 -diskcount 32
+
+# Create vserver1 *CUSTOMIZE the IP Address*
+vserver create -vserver vserver1 -subtype default -rootvolume svm_root -rootvolume-security-style unix -language C.UTF-8
+net int create -vserver vserver1 -lif vserver1_nfs_lif1 -role data -data-protocol cifs,nfs,fcache -address 192.168.0.201 -netmask 255.255.255.0 -home-node vsim-01 -home-port e0d -status-admin up -failover-policy system-defined -firewall-policy data 
+export-policy rule create -policyname default -clientmatch 0.0.0.0/0 -rorule any -rwrule none -allow-suid true  
+
+
+

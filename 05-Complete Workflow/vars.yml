@@ -1,0 +1,5 @@
+hostname: "172.16.108.189"
+username: "admin"
+password: "netapp123"
+vserver: ansibleSVM
+address: 172.16.108.202
