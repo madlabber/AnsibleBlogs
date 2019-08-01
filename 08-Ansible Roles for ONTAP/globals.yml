@@ -7,7 +7,7 @@ license_codes: YVUCRRRRYVHXCFABGAAAAAAAAAAA,MBXNQRRRYVHXCFABGAAAAAAAAAAA,KQSRRRR
 #  - cluster-01
 #  - cluster-02
 
-#motd: "This MOTD was set by an Ansible Role"#
+motd: "This MOTD was set by an Ansible Role"#
 
 dns: # Set DNS for Cluster
   - { dns_domains: lab.local, dns_nameservers: 192.168.0.11 }
@@ -25,6 +25,7 @@ aggrs: # Create one or more Aggregates
 ports: #Set MTU for ports. * Ports also has variables 'autonegotiate', and 'flowcontrol' which 
 #default to true, and none but can be overridden by your playbook
   - { node: ontap9-01, port: e0c, mtu: 1500 }
+  - { node: ontap9-02, port: e0c, mtu: 1500 }
 
 # ifgrps don't work on virtual ontap nodes
 #ifgrps: # Create and add ports to Interface Groups.
@@ -43,4 +44,3 @@ ports: #Set MTU for ports. * Ports also has variables 'autonegotiate', and 'flow
 inters: # Create intercluster lifs for SnapMirror.
   - { name: ontap9-01_ic1, address: 192.168.0.93, netmask: 255.255.255.0, node: ontap9-01, port: e0c }
   - { name: ontap9-02_ic1, address: 192.168.0.94, netmask: 255.255.255.0, node: ontap9-02, port: e0c }
-  
