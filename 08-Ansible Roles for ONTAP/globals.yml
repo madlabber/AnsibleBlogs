@@ -20,12 +20,13 @@ snmp: # Setup or modify an SNMP community
   - { community_name: public, access_control: ro }
 
 aggrs: # Create one or more Aggregates
-  - { name: aggr1, node: ontap9-01, disk_count: 16, max_raid: 16 }
-  - { name: aggr2, node: ontap9-02, disk_count: 16, max_raid: 16 }
+  - { name: aggr1, node: "{{cluster}}-01", disk_count: 16, max_raid: 16 }
+  - { name: aggr2, node: "{{cluster}}-02", disk_count: 16, max_raid: 16 }
 
+# Only set for ports being REMOVED from default broadcast domain
 ports: #Set MTU for ports. * Ports also has variables 'autonegotiate', and 'flowcontrol' which default to true, and none but can be overridden by your playbook
-  - { node: ontap9-01, port: e0g, mtu: 1500 }
-  - { node: ontap9-02, port: e0g, mtu: 1500 }
+  - { node: "{{cluster}}-01", port: e0g, mtu: 1500 }
+  - { node: "{{cluster}}-02", port: e0g, mtu: 1500 }
 
 # ifgrps don't work on virtual ontap nodes
 #ifgrps: # Create and add ports to Interface Groups.
@@ -38,9 +39,10 @@ ports: #Set MTU for ports. * Ports also has variables 'autonegotiate', and 'flow
 #vlans: # Create vlans on LIFS
 #  - { id: 201, node: cluster-01, parent: a0a }
 
-#bcasts: # Create Broadcast domains
-#  - { name: Backup, mtu: 9000, ipspace: default, ports: 'cluster-01:e0c,vsim-02:e0c' }
+# a demo broadcast domain
+bcasts: # Create Broadcast domains
+  - { name: demo, mtu: 1500, ipspace: default, ports: '{{cluster}}-01:e0g,{{cluster}}-02:e0g' }
 
 inters: # Create intercluster lifs for SnapMirror.
-  - { name: ontap9-01_ic1, address: 192.168.0.93, netmask: 255.255.255.0, node: ontap9-01, port: e0c }
-  - { name: ontap9-02_ic1, address: 192.168.0.94, netmask: 255.255.255.0, node: ontap9-02, port: e0c }
+  - { name: "{{cluster}}-01_ic1", address: 192.168.0.93, netmask: 255.255.255.0, node: "{{cluster}}-01", port: e0c }
+  - { name: "{{cluster}}-02_ic1", address: 192.168.0.94, netmask: 255.255.255.0, node: "{{cluster}}-02", port: e0c }
