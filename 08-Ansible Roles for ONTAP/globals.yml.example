@@ -1,3 +1,5 @@
+cluster: ontap9
+
 license_codes: AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,
 AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAAAAA
 
@@ -40,4 +42,3 @@ bcasts: # Create Broadcast domains
 inters: # Create intercluster lifs for SnapMirror.
   - { name: intercluster_1, address: 172.32.0.187, netmask: 255.255.255.0, node: cluster-01, port: e0c }
   - { name: intercluster_2, address: 172.32.0.188, netmask: 255.255.255.0, node: cluster-02, port: e0c }
-  
