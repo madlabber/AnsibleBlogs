@@ -23,9 +23,9 @@ aggrs: # Create one or more Aggregates
   - { name: aggr1, node: ontap9-01, disk_count: 16, max_raid: 16 }
   - { name: aggr2, node: ontap9-02, disk_count: 16, max_raid: 16 }
 
-#ports: #Set MTU for ports. * Ports also has variables 'autonegotiate', and 'flowcontrol' which default to true, and none but can be overridden by your playbook
-#  - { node: ontap9-01, port: e0c, mtu: 1500 }
-#  - { node: ontap9-02, port: e0c, mtu: 1500 }
+ports: #Set MTU for ports. * Ports also has variables 'autonegotiate', and 'flowcontrol' which default to true, and none but can be overridden by your playbook
+  - { node: ontap9-01, port: e0g, mtu: 1500 }
+  - { node: ontap9-02, port: e0g, mtu: 1500 }
 
 # ifgrps don't work on virtual ontap nodes
 #ifgrps: # Create and add ports to Interface Groups.
