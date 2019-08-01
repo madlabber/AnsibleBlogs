@@ -1,4 +1,4 @@
-hostname: "172.16.108.189"
+hostname: "192.168.0.80"
 username: "admin"
 password: "netapp123"
 https: true

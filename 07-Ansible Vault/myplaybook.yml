@@ -2,7 +2,7 @@
 - hosts: localhost 
   name: Setup ONTAP 
   vars:
-    hostname: "172.16.108.189"
+    hostname: "192.168.0.80"
     username: "admin"
     https: true
     validate_certs: false
