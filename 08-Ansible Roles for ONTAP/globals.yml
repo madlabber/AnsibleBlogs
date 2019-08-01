@@ -10,7 +10,7 @@ license_codes: YVUCRRRRYVHXCFABGAAAAAAAAAAA,MBXNQRRRYVHXCFABGAAAAAAAAAAA,KQSRRRR
 #motd: "This MOTD was set by an Ansible Role"#
 
 dns: # Set DNS for Cluster
-  - { dns_domains: lab.local, dns_nameservers: 192.168.0.11 }
+  - { dns_domains: madlabber.com, dns_nameservers: 8.8.8.8 }
 
 ntp: # Set NTP Server (requires the cluster to have DNS set)
   - { server_name: time.nist.gov, version: auto }
