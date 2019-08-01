@@ -7,7 +7,7 @@ license_codes: YVUCRRRRYVHXCFABGAAAAAAAAAAA,MBXNQRRRYVHXCFABGAAAAAAAAAAA,KQSRRRR
 #  - cluster-01
 #  - cluster-02
 
-motd: 'This MOTD was set by an Ansible Role'
+motd: 'test'
 
 dns: # Set DNS for Cluster
   - { dns_domains: lab.local, dns_nameservers: 192.168.0.11 }
