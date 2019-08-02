@@ -10,14 +10,24 @@
   vars_files:
     - "{{ file }}"
   tasks:
-  - name: Get Ontapi version
-    na_ontap_gather_facts:
-      state: info
-      <<: *input
+  # - name: Get Ontapi version
+  #   na_ontap_gather_facts:
+  #     state: info
+  #     <<: *input
+  #     https: true
+  #     ontapi: 32
+  #     validate_certs: false
+  # - import_role:
+  #     name: na_ontap_cluster_config
+  #   vars:
+  #     <<: *input
+  - name: Set Cluster-Level MOTD
+    na_ontap_motd:
+      vserver: my_ontap_cluster
+      message: "Cluster wide MOTD"
+      hostname: "{{ netapp_hostname }}"
+      username: "{{ netapp_username }}"
+      password: "{{ netapp_password }}"
+      state: present
       https: true
-      ontapi: 32
       validate_certs: false
-  - import_role:
-      name: na_ontap_cluster_config
-    vars:
-      <<: *input
