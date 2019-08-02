@@ -1,0 +1,44 @@
+cluster: #cluster name
+
+license_codes: AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,
+AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAA,AAAAAAAAAAAAAA
+
+disks: # at current the disks module assigns all visiable disks to a node. If you are wanting to 
+split disks, currently that has to be done manually
+  - cluster-01
+  - cluster-02
+
+motd: "The login in message you would like displayed when someone ssh's into the system"
+
+dns: # Set DNS for Cluster
+  - { dns_domains: ansible.local, dns_nameservers: 1.1.1.1 }
+
+ntp: # Set NTP Server (requires the cluster to have DNS set)
+  - { server_name: time.nist.gov, version: auto }
+
+snmp: # Setup or modify an SNMP community
+  - { community_name: public, access_control: ro }
+
+aggrs: # Create one or more Aggregates
+  - { name: aggr1, node: cluster-01, disk_count: 26, max_raid: 26 }
+  - { name: aggr2, node: cluster-02, disk_count: 26, max_raid: 26 }
+
+ports: #Set MTU for ports. * Ports also has variables 'autonegotiate', and 'flowcontrol' which 
+default to true, and none but can be overridden by your playbook
+  - { node: cluster-01, port: e0c, mtu: 9000 }
+
+ifgrps: # Create and add ports to Interface Groups.
+  - { name: a0a, node: cluster-01, port: "e0a", mode: multimode }
+  - { name: a0a, node: cluster-02, port: "e0a", mode: multimode }
+  - { name: a0a, node: cluster-01, port: "e0b", mode: multimode }
+  - { name: a0a, node: cluster-02, port: "e0b", mode: multimode }
+
+vlans: # Create vlans on LIFS
+  - { id: 201, node: cluster-01, parent: a0a }
+
+bcasts: # Create Broadcast domains
+  - { name: Backup, mtu: 9000, ipspace: default, ports: 'cluster-01:e0c,vsim-02:e0c' }
+
+inters: # Create intercluster lifs for SnapMirror.
+  - { name: intercluster_1, address: 172.32.0.187, netmask: 255.255.255.0, node: cluster-01, port: e0c }
+  - { name: intercluster_2, address: 172.32.0.188, netmask: 255.255.255.0, node: cluster-02, port: e0c }
