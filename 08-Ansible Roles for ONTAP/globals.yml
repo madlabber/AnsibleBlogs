@@ -14,7 +14,7 @@ dns: # Set DNS for Cluster
   - { dns_domains: lab.local, dns_nameservers: 192.168.0.11 }
 
 ntp: # Set NTP Server (requires the cluster to have DNS set)
-  - { server_name: time.nist.gov, version: auto }
+  - { server_name: dc.lab.local, version: auto }
 
 snmp: # Setup or modify an SNMP community
   - { community_name: public, access_control: ro }
