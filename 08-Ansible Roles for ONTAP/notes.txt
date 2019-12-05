@@ -10,16 +10,10 @@ echo "[defaults]" > /etc/ansible/ansible.cfg
 echo "roles_path = /etc/ansible/content/" >> /etc/ansible/ansible.cfg
 echo "deprecation_warnings = False" >> /etc/ansible/ansible.cfg
 
-
-
-Add the following two lines to a new file, or just the second line to an existing file under the [default] section.  The third line is optional but will clean up your output.  In Ansible 2.8, releasing May 16th,  changes will be made for how some features work.  We are making the edits to match these new features, but until they are all done a warning will be produced.  The third line silences that warning.
-
+# cat the resulting file, and compare with this output:
 [defaults]
 roles_path = /etc/ansible/content/
 deprecation_warnings = False
-
-
-
 
 #running the role based playbook
 ansible-playbook cluster-setup.yml --extra-vars="@cred.yml"
