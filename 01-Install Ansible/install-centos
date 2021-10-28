@@ -9,3 +9,40 @@ sudo pip install requests
 sudo pip install PyVmomi --ignore-installed six 
 
 
+tower:
+sudo su
+easy_install pip
+yum install epel-release -y
+yum install ansible
+pip install --upgrade ansible==2.9
+pip install netapp-lib
+yum install postgresql-server
+grab and untar binaries
+update inventory file - no special characters on db password
+run ./setup.sh
+
+
+AWX:
+sudo su
+easy_install pip
+yum install epel-release -y
+yum install ansible
+pip install --upgrade ansible==2.9
+pip install netapp-lib
+yum install postgresql-server
+yum install docker
+pip install docker-compose
+
+grab and untar binaries
+  mkdir /awx
+  cd /awx
+  git clone -b 15.0.1 https://github.com/ansible/awx.git
+  git clone -b 15.0.1 https://github.com/ansible/awx-logos.git
+
+update inventory file - no special characters on db password
+  vi /awx/awx/installer/inventory
+  edit admin_password
+  awx_official=true
+Run the installer
+  cd /awx/awx/installer
+  ansible-playbook -i inventory install.yml
